@@ -4,8 +4,11 @@ from django.db.models import (
     BigAutoField,
     CharField,
     FloatField,
-    DecimalField,
+    OneToOneField,
+    CASCADE,
 )
+
+from app.models.coordinates import Coordinate
 
 
 class WindTurbine(Model):
@@ -20,12 +23,7 @@ class WindTurbine(Model):
     model: CharField = CharField(max_length=100)
     height: FloatField = FloatField()
     rotor_diameter: FloatField = FloatField()
-    latitude: DecimalField = DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True
-    )
-    longitude: DecimalField = DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True
-    )
+    coordinates: OneToOneField = OneToOneField(Coordinate, on_delete=CASCADE)
 
     class Meta:
         abstract = True
